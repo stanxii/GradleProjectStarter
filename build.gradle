@@ -1,0 +1,42 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+mainClassName = 'hello.HelloWorld'
+
+// tag::repositories[]
+repositories { 
+    mavenCentral() 
+}
+// end::repositories[]
+
+// tag::jar[]
+jar {
+    baseName = 'gs-gradle'
+    version =  '0.1.0'
+}
+// end::jar[]
+
+// tag::dependencies[]
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile "joda-time:joda-time:2.2"
+	compile "com.google.guava:guava:19.0"
+	compile "org.slf4j:slf4j-api:1.7.21"
+	compile "ch.qos.logback:logback-classic:1.1.6"
+    compile "org.slf4j:log4j-over-slf4j:1.7.19"
+}
+// end::dependencies[]
+
+configurations.all {
+    exclude group: "org.slf4j", module: "slf4j-log4j12"
+    exclude group: "log4j", module: "log4j"
+}
+
+// tag::wrapper[]
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.13'
+}
+// end::wrapper[]
